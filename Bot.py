@@ -1,5 +1,5 @@
-﻿#Date 2018.07.22
-#Version 1.5
+#Date 2018.10.30
+#Version 1.6
 
 # IMPORT MODULES
 #-----------------------
@@ -8,14 +8,15 @@ import statistics
 import math
 import time
 import datetime
+import os
 
 # DEFINE VARIABLES
 #-----------------------
 step_mode = 1
 noise_mode = 0
 use_current_price = 0
-order_buy_max_price = 0.000003
-order_sell_min_price = 0.000004
+order_buy_max_price = 0.0003
+order_sell_min_price = 0.0002
 order_buy_override_price = 0
 order_sell_override_price = 0
 coin1_noise_unit = 0.000001 #+-
@@ -25,7 +26,7 @@ TestMode = 0
 
 # DEFINE CURRENCIES
 #-----------------------
-coin1 = 'SUNC'
+coin1 = 'STAK'
 coin2 = 'ETH'
 coin_pair = coin1 + '-' + coin2
 
@@ -37,18 +38,21 @@ coin_settings = {
     'HGT-ETH': {'order_average_price': 0.000023, 'coin_min_unit': 0.000001, 'coin1_min_trade_amount': 100, 'coin2_min_trade_amount': 0.005},
     'MORPH-ETH': {'order_average_price': 0.000030, 'coin_min_unit': 0.000001, 'coin1_min_trade_amount': 10, 'coin2_min_trade_amount': 0.005},
     'NET-ETH': {'order_average_price': 0.000850, 'coin_min_unit': 0.000001, 'coin1_min_trade_amount': 10, 'coin2_min_trade_amount': 0.005},
-	'SUNC-ETH': {'order_average_price': 0.000005, 'coin_min_unit': 0.000001, 'coin1_min_trade_amount': 10, 'coin2_min_trade_amount': 0.005}
+	'SUNC-ETH': {'order_average_price': 0.000005, 'coin_min_unit': 0.000001, 'coin1_min_trade_amount': 10, 'coin2_min_trade_amount': 0.005},
+	'STAK-ETH': {'order_average_price': 0.00023, 'coin_min_unit': 0.000001, 'coin1_min_trade_amount': 10, 'coin2_min_trade_amount': 0.003}
 }
 
 #order_buy_price = coin_settings[coin_pair]['order_average_price'] + coin_settings[coin_pair]['coin_min_unit']
 #order_sell_price = coin_settings[coin_pair]['order_average_price'] - coin_settings[coin_pair]['coin_min_unit']
 coin1_min_trade_amount = coin_settings[coin_pair]['coin1_min_trade_amount']
 coin2_min_trade_amount = coin_settings[coin_pair]['coin2_min_trade_amount']
-coin2_Safety_Untreadeable = 0.005
+coin2_Safety_Untreadeable = 0.003
 
 # AUTHENTICATE
 #-----------------------
-with open(r'D:\GitHub\HitBTC Python Trading Bot\PrivateKey.txt') as file:
+script_dir = os.path.dirname(__file__)
+filename = os.path.join(script_dir, 'PrivateKey.txt')
+with open(filename) as file:
     auth_key = file.read().splitlines()
 file.close()
 
@@ -218,6 +222,3 @@ while loop < 1000000:
 	time.sleep(SleepTime)
 
 	loop = loop + 1
-
-#1 Stop-loss functionality
-#2 EMA calculation for auto threshold price adjust
